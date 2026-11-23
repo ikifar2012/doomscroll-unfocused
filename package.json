@@ -1,6 +1,6 @@
 {
   "name": "doomscroll-unfocused",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "private": true,
   "description": "A Chrome extension to keep videos playing when you switch tabs, with per-site controls.",
   "scripts": {

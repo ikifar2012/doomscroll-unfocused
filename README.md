@@ -56,7 +56,8 @@ when you first add X. X itself is not enabled or granted access by default.
 The same option is available on legacy `twitter.com` domains.
 
 It guards against automatic pause calls when the current video leaves the
-viewport. Manual player controls, keyboard pause, and Media Session pause controls
+viewport and keeps that playback protected when it comes back into view.
+Manual player controls, keyboard pause, and Media Session pause controls
 remain available. Starting another visible video can replace the previous one.
 If X removes a player from the timeline, the extension cannot keep it alive.
 

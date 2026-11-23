@@ -6,6 +6,7 @@
 
   const nativePause = HTMLMediaElement.prototype.pause;
   let currentVideo: HTMLVideoElement | undefined;
+  let keepCurrentPlaying = false;
   let manualPauseUntil = 0;
 
   function outsideViewport(video: HTMLVideoElement): boolean {
@@ -67,13 +68,26 @@
       nativePause.call(currentVideo);
     }
     currentVideo = video;
+    keepCurrentPlaying = false;
     manualPauseUntil = 0;
   }, true);
 
+  for (const eventName of ["ended", "emptied"]) {
+    document.addEventListener(eventName, (event) => {
+      if (event.target === currentVideo) keepCurrentPlaying = false;
+    }, true);
+  }
+
   HTMLMediaElement.prototype.pause = function () {
     if (this instanceof HTMLVideoElement && this === currentVideo
-      && this.isConnected && !this.paused && !this.ended
-      && performance.now() >= manualPauseUntil && leavingViewport(this)) return;
+      && this.isConnected && !this.paused && !this.ended && !this.error
+      && performance.now() >= manualPauseUntil
+      && (keepCurrentPlaying || leavingViewport(this))) {
+      // Keep the same playback protected when X reconciles its player on re-entry.
+      keepCurrentPlaying = true;
+      return;
+    }
+    if (this === currentVideo) keepCurrentPlaying = false;
     return nativePause.call(this);
   };
 })();
