@@ -1,10 +1,10 @@
 {
   "name": "doomscroll-unfocused",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
-  "description": "A Chrome extension to suppress focus-loss pause signals on Instagram and CNN.",
+  "description": "A Chrome extension to keep videos playing when you switch tabs, with per-site controls.",
   "scripts": {
-    "build": "bun run icons && bun build ./src/keep-playing.ts --target browser --format iife --outfile extension/keep-playing.js",
+    "build": "bun run icons && bun build ./src/keep-playing.ts ./src/background.ts ./src/popup.ts --target browser --format iife --outdir extension",
     "check": "tsc --noEmit",
     "package": "bun run build && bash scripts/package.sh",
     "icons": "bun scripts/icons.ts"
@@ -15,6 +15,7 @@
   "devDependencies": {
     "@resvg/resvg-js": "^2.6.2",
     "@types/bun": "^1.4.5",
+    "@types/chrome": "^0.3.7",
     "typescript": "^7.0.2"
   },
   "type": "module",

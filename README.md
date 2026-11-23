@@ -1,10 +1,13 @@
 # Doomscroll Unfocused
 
-Keep Instagram and CNN playing when you switch tabs or windows.
+Keep videos playing when you switch tabs or windows.
 
 Doomscroll Unfocused is a Chrome extension that blocks the visibility and focus
 signals sites use to pause playback when you switch away. Start a video, then
 get on with whatever else you were doing.
+
+Instagram and CNN are enabled by default. Use the toolbar popup to toggle each
+site, add the website you're viewing, or remove saved domains.
 
 ## Install
 
@@ -26,7 +29,23 @@ Published [GitHub releases](https://github.com/ikifar2012/doomscroll-unfocused/r
 include a prebuilt `doomscroll-unfocused.zip`. Extract it and load the extracted
 folder using the same steps; no build tools are needed.
 
-To turn it off, disable the extension and refresh the site.
+## Site controls
+
+Click the extension's toolbar icon to open the popup.
+
+- Toggle the current site on or off.
+- Click **Add current site** to enable another domain. Chrome asks for access
+  to that domain when needed; other websites remain untouched. Custom entries
+  cover the exact hostname and HTTP/HTTPS scheme you add, without subdomains.
+- Manage saved sites with their switches and remove buttons. The default
+  Instagram/CNN entries include their subdomains.
+
+Refresh open tabs after changing their settings. The popup provides a **Refresh
+tab** button when the current site changes. Disabling keeps a site's settings;
+removing a custom site also releases its optional access permission.
+
+Chrome's internal pages and the Chrome Web Store cannot be added. Site settings
+are saved locally on your device.
 
 ## How it works
 
@@ -34,8 +53,10 @@ A content script runs before the site's scripts, makes the document report itsel
 as visible and focused, and stops page visibility-change and blur events from
 reaching the site's listeners. Inputs and buttons still receive normal blur events.
 
-It runs only on Instagram and CNN. It does not collect data, make network requests,
-or load remote code. See the [privacy policy](PRIVACY.md).
+It runs only on enabled sites where you have allowed access. A service worker
+maintains saved script registrations so injection still runs at page load while
+the worker is asleep. The extension stores your site preferences locally and
+does not send data anywhere or load remote code. See the [privacy policy](PRIVACY.md).
 
 ## Limitations
 
@@ -49,8 +70,10 @@ with the page URL and steps to reproduce it.
 
 ## Development
 
-Edit `src/keep-playing.ts`, rebuild, reload the extension in `chrome://extensions`,
-and refresh the site.
+The content script is in `src/keep-playing.ts`, site registration is in
+`src/background.ts`, and the popup is in `src/popup.ts` and `extension/popup.*`.
+After editing, rebuild, reload the extension in `chrome://extensions`, and
+refresh the site.
 
 ```sh
 bun run build    # Compile the extension
@@ -60,7 +83,7 @@ bun run package  # Build dist/doomscroll-unfocused.zip
 
 Pushes and pull requests build the extension through GitHub Actions. To publish a
 GitHub release, match the tag to the version in `package.json` and
-`extension/manifest.json` (for example, `v0.2.0`). The release workflow builds and
+`extension/manifest.json` (for example, `v0.3.0`). The release workflow builds and
 attaches the ZIP.
 
 For Chrome Web Store requirements, see the [publishing guide](docs/chrome-web-store.md).

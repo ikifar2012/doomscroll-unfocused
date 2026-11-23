@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Doomscroll Unfocused",
-  "version": "0.2.0",
-  "description": "Keep Instagram and CNN from pausing playback when you switch tabs or windows.",
+  "version": "0.3.0",
+  "description": "Keep videos playing when you switch tabs. Enable it per site, with Instagram and CNN included.",
   "minimum_chrome_version": "119",
   "icons": {
     "16": "icons/icon-16.png",
@@ -10,14 +10,24 @@
     "48": "icons/icon-48.png",
     "128": "icons/icon-128.png"
   },
-  "content_scripts": [
-    {
-      "matches": ["https://*.instagram.com/*", "https://*.cnn.com/*"],
-      "js": ["keep-playing.js"],
-      "run_at": "document_start",
-      "world": "MAIN",
-      "all_frames": true,
-      "match_origin_as_fallback": true
-    }
-  ]
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://*.instagram.com/*",
+    "https://*.cnn.com/*"
+  ],
+  "optional_host_permissions": [
+    "https://*/*",
+    "http://*/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Doomscroll Unfocused",
+    "default_popup": "popup.html"
+  }
 }

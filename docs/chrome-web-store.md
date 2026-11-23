@@ -32,37 +32,48 @@ build as a completed store submission.
 
 **Name:** Doomscroll Unfocused
 
-**Summary:** Keep Instagram and CNN from pausing playback when you switch tabs or windows.
+**Summary:** Keep videos playing when you switch tabs. Enable it per site, with Instagram and CNN included.
 
 **Description:**
 
 Keep listening while you move to another tab or window. Doomscroll Unfocused
-adjusts page visibility and focus signals on Instagram and CNN to help prevent
-their players from pausing when you switch away.
+adjusts page visibility and focus signals to help prevent players from pausing
+when you switch away. Instagram and CNN are enabled by default. Use the toolbar
+popup to enable, disable, add, and remove sites.
 
 Start playback yourself. The extension does not force videos to play, bypass
-autoplay rules, or stop Chrome from suspending tabs. It has no settings page;
-disable it through Chrome's extensions page and refresh the site to restore
-normal behavior. Website changes may affect compatibility.
+autoplay rules, or stop Chrome from suspending tabs. Refresh open tabs after
+changing site settings. Website changes may affect compatibility.
 
-No analytics, tracking, data collection, or external services. Not affiliated
-with Instagram, Meta, or CNN.
+Site preferences are stored locally. No analytics, tracking, or external
+services. Not affiliated with Instagram, Meta, or CNN.
 
 **Single purpose:** Prevent visibility- and focus-triggered playback pauses on
-Instagram and CNN when the user switches tabs or windows.
+user-selected sites when the user switches tabs or windows.
 
-**Site access justification:** The content script must run before player code
-on `https://*.instagram.com/*` and `https://*.cnn.com/*`, including their related
-frames, to adjust visibility/focus checks and suppress page visibility/blur
-notifications. No access to other sites is requested.
+**Permissions justification:**
+
+- `activeTab`: identify the domain of the current tab when the user opens the
+  toolbar popup, so the popup can show its settings and offer to add it.
+- `scripting`: register or unregister the bundled playback content script for
+  enabled sites, running before the page's scripts.
+- `storage`: save manually chosen domains and their enabled states locally.
+- Required Instagram/CNN host access: provide the default sites, including
+  subdomains and matching or origin-inheriting player frames.
+- Optional `http://*/*` and `https://*/*` host declarations: allow users to add
+  domains at runtime. The popup requests only the selected domain's match pattern
+  after an explicit user action; these declarations do not grant all-site access.
 
 **Remote code:** No. The executable script is bundled in the extension ZIP.
 
-**Data handling:** The current implementation does not collect user data. It
-locally inspects event targets to preserve input/button blur behavior, without
-recording or transmitting them. Review all dashboard certifications against the
-actual submitted version; do not select categories for data the extension does
-not collect.
+**Data handling:** The extension stores manually chosen domains and enabled
+states locally, and reads the current tab's URL when the popup opens. It does not
+save full URLs or browsing history and does not transmit settings or browsing
+data. It locally inspects event targets to preserve input/button blur behavior,
+without recording them. Disclose this local handling accurately in the dashboard;
+local-only processing is still subject to Google's disclosure requirements.
+Review the included privacy policy and dashboard certifications against the
+actual submitted version.
 
 **Support:** https://github.com/ikifar2012/doomscroll-unfocused/issues
 

@@ -2,3 +2,5 @@ dist/
 node_modules/
 *.log
 extension/keep-playing.js
+extension/background.js
+extension/popup.js

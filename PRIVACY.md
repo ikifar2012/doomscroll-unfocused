@@ -1,18 +1,34 @@
 # Privacy policy
 
-Doomscroll Unfocused runs locally in your browser on Instagram and CNN pages.
+Doomscroll Unfocused runs locally in your browser on the sites you enable.
+Instagram and CNN are enabled by default; you can disable or remove them.
 It changes the visibility and focus signals delivered to those pages to help
 prevent playback from pausing when you switch tabs or windows.
 
-The extension does not collect, store, transmit, sell, or share personal data,
-browsing history, page content, account information, or usage analytics. It does
-not read cookies, send network requests, or connect to a developer-operated server.
-It does not download or execute remote code.
+The extension saves your chosen site domains and their enabled/disabled settings
+in Chrome's local extension storage. These preferences stay on your device and
+are not synced or sent to the developer or other parties. Removing a site deletes
+its saved preference. Uninstalling the extension removes its local settings.
+
+When you open the toolbar popup, the extension reads the current tab's URL to
+identify its domain and offer site controls. It does not save the full URL, page
+paths, query strings, or a history of visited pages.
+
+The extension does not collect or transmit page content, account information, or
+usage analytics. It does not sell or share your data, read cookies, send network
+requests, connect to a developer-operated server, or download remote code.
 
 The extension inspects event targets only to distinguish a page losing focus from
 an input or button losing focus. Those event targets are not recorded or sent
-anywhere. Instagram and CNN continue to operate under their own privacy policies;
-this extension makes their visibility and focus checks see the page as active.
+anywhere. Sites continue to operate under their own privacy policies; this
+extension makes their visibility and focus checks see the page as active.
+
+Site access is requested when you add a domain. Disabling a site stops future
+script injection but keeps its preference and permission so it can be re-enabled.
+Removing a custom site also releases its optional permission. The default
+Instagram/CNN host permissions are declared at installation and can be managed
+through Chrome's extension settings. Existing pages must be refreshed after
+settings changes to apply or remove the behavior.
 
 Questions about the extension can be raised through
 [GitHub Issues](https://github.com/ikifar2012/doomscroll-unfocused/issues).

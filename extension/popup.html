@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Doomscroll Unfocused</title>
+    <link rel="stylesheet" href="popup.css">
+    <script src="popup.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <img src="icons/icon-32.png" width="28" height="28" alt="">
+      <h1>Doomscroll <span>Unfocused</span></h1>
+    </header>
+
+    <main>
+      <section class="current" aria-labelledby="current-host">
+        <div class="current-heading">
+          <h2 id="current-host">Loading…</h2>
+          <label id="current-control" class="switch" hidden>
+            <input id="current-toggle" type="checkbox" role="switch" aria-label="Keep playing on this site">
+            <span class="track" aria-hidden="true"></span>
+          </label>
+        </div>
+        <p id="current-status" class="secondary">Getting this tab’s site settings.</p>
+        <button id="add-current" class="primary" hidden>Add current site</button>
+        <p id="access-note" class="hint" hidden>Chrome will ask for access to this domain.</p>
+      </section>
+
+      <section class="saved" aria-labelledby="saved-heading">
+        <h2 id="saved-heading">Saved sites</h2>
+        <ul id="sites"></ul>
+        <p id="empty" class="secondary" hidden>No saved sites. Add a website from its tab.</p>
+      </section>
+
+      <div id="notice" class="notice" role="status" aria-live="polite" hidden>
+        <p id="notice-text"></p>
+        <button id="refresh" class="text-button" hidden>Refresh tab</button>
+      </div>
+    </main>
+
+    <footer>Refresh open tabs after changing site settings.</footer>
+  </body>
+</html>
