@@ -31,7 +31,8 @@ folder using the same steps; no build tools are needed.
 
 ## Site controls
 
-Click the extension's toolbar icon to open the popup.
+Click the extension's toolbar icon to open the popup. It follows your browser's
+light or dark appearance automatically.
 
 - Toggle the current site on or off.
 - Click **Add current site** to enable another domain. Chrome asks for access
