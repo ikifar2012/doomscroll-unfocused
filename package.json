@@ -1,0 +1,28 @@
+{
+  "name": "doomscroll-unfocused",
+  "version": "0.2.0",
+  "private": true,
+  "description": "A Chrome extension to suppress focus-loss pause signals on Instagram and CNN.",
+  "scripts": {
+    "build": "bun build ./src/keep-playing.ts --target browser --format iife --outfile extension/keep-playing.js",
+    "check": "tsc --noEmit",
+    "package": "bun run build && bash scripts/package.sh"
+  },
+  "engines": {
+    "bun": ">=1.4.0"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.4.5",
+    "typescript": "^7.0.2"
+  },
+  "type": "module",
+  "packageManager": "bun@1.4.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ikifar2012/doomscroll-unfocused.git"
+  },
+  "homepage": "https://github.com/ikifar2012/doomscroll-unfocused#readme",
+  "bugs": {
+    "url": "https://github.com/ikifar2012/doomscroll-unfocused/issues"
+  }
+}

@@ -1,0 +1,100 @@
+# Chrome Web Store publishing
+
+Requirements checked against Google's official documentation on November 22, 2026.
+The GitHub workflows produce a downloadable ZIP. They do not upload or submit
+the extension to the Chrome Web Store.
+
+## What is still needed
+
+- Register a Chrome Web Store developer account, agree to the terms, pay the
+  one-time registration fee, and finish the dashboard's account verification
+  requirements. Google requires 2-Step Verification before publishing or updating.
+  The registration screen confirms the applicable fee.
+- Create a 128x128 PNG icon, include it in `extension/`, and declare it in the
+  manifest's `icons` field. Google's square-icon guidance is 96x96 artwork with
+  transparent padding inside the 128x128 image. Smaller 16/32/48 PNG variants
+  are useful for Chrome's UI.
+- Capture at least one screenshot demonstrating actual use, at 1280x800 or
+  640x400. Up to five screenshots are supported. Promotional tiles (440x280 and
+  1400x560) are optional.
+- Finish the listing: name, detailed description, category, language, support
+  information, and distribution choices.
+- Complete the Privacy practices tab with the single purpose, justification for
+  site access, remote-code declaration, and accurate data disclosures. Review the
+  included [privacy policy](../PRIVACY.md) and use its public repository URL in
+  the dashboard where appropriate.
+- Verify playback on the live Instagram and CNN players, including tab switching,
+  another focused window, manual pause, scrolling away, and form controls. No
+  successful live-player verification has been recorded yet.
+
+The current package is missing the icon; the repository does not yet contain
+store screenshots. Do not treat a successful build as a completed store submission.
+
+## Suggested listing text
+
+**Name:** Doomscroll Unfocused
+
+**Summary:** Keep Instagram and CNN from pausing playback when you switch tabs or windows.
+
+**Description:**
+
+Keep listening while you move to another tab or window. Doomscroll Unfocused
+adjusts page visibility and focus signals on Instagram and CNN to help prevent
+their players from pausing when you switch away.
+
+Start playback yourself. The extension does not force videos to play, bypass
+autoplay rules, or stop Chrome from suspending tabs. It has no settings page;
+disable it through Chrome's extensions page and refresh the site to restore
+normal behavior. Website changes may affect compatibility.
+
+No analytics, tracking, data collection, or external services. Not affiliated
+with Instagram, Meta, or CNN.
+
+**Single purpose:** Prevent visibility- and focus-triggered playback pauses on
+Instagram and CNN when the user switches tabs or windows.
+
+**Site access justification:** The content script must run before player code
+on `https://*.instagram.com/*` and `https://*.cnn.com/*`, including their related
+frames, to adjust visibility/focus checks and suppress page visibility/blur
+notifications. No access to other sites is requested.
+
+**Remote code:** No. The executable script is bundled in the extension ZIP.
+
+**Data handling:** The current implementation does not collect user data. It
+locally inspects event targets to preserve input/button blur behavior, without
+recording or transmitting them. Review all dashboard certifications against the
+actual submitted version; do not select categories for data the extension does
+not collect.
+
+**Support:** https://github.com/ikifar2012/doomscroll-unfocused/issues
+
+**Privacy policy:** https://github.com/ikifar2012/doomscroll-unfocused/blob/main/PRIVACY.md
+
+## Upload and submit
+
+1. Finish the missing assets and live checks above.
+2. Increase `version` in both `extension/manifest.json` and `package.json` for
+   each update. Chrome requires the uploaded version to increase.
+3. Run `bun install --frozen-lockfile`, `bun run check`, and `bun run package`.
+4. Upload `dist/doomscroll-unfocused.zip` through **New item** in the developer
+   dashboard. Its `manifest.json` is at the ZIP root, as required.
+5. Complete Store listing, Privacy practices, Distribution, and any reviewer
+   instructions. Provide reviewer access instructions if login is needed; never
+   put passwords or account credentials in this public repository.
+6. Submit for review. Choose automatic publishing after approval or deferred
+   publishing. Approval and review timing are controlled by Google.
+
+For later automation, the Chrome Web Store API can upload versions and submit
+them after the initial dashboard setup. This project does not configure store
+credentials or automatic store submissions.
+
+## Official sources
+
+- [Developer registration](https://developer.chrome.com/docs/webstore/register)
+- [2-Step Verification](https://developer.chrome.com/docs/webstore/program-policies/two-step-verification)
+- [Package preparation](https://developer.chrome.com/docs/webstore/prepare)
+- [Icon and screenshot requirements](https://developer.chrome.com/docs/webstore/images)
+- [Listing fields](https://developer.chrome.com/docs/webstore/cws-dashboard-listing)
+- [Privacy declarations](https://developer.chrome.com/docs/webstore/cws-dashboard-privacy)
+- [User data FAQ](https://developer.chrome.com/docs/webstore/program-policies/user-data-faq)
+- [Upload and review](https://developer.chrome.com/docs/webstore/publish)
