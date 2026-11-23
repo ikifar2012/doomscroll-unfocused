@@ -5,9 +5,17 @@
   if (!["x.com", "twitter.com"].some((root) => location.hostname === root || location.hostname.endsWith(`.${root}`))) return;
 
   const nativePause = HTMLMediaElement.prototype.pause;
+  const nativePlay = HTMLMediaElement.prototype.play;
   let currentVideo: HTMLVideoElement | undefined;
   let keepCurrentPlaying = false;
   let manualPauseUntil = 0;
+  let manualPlayTarget: HTMLVideoElement | undefined;
+
+  function hasProtectedVideo(): boolean {
+    return Boolean(currentVideo && currentVideo.isConnected && !currentVideo.paused
+      && !currentVideo.ended && !currentVideo.error
+      && (keepCurrentPlaying || leavingViewport(currentVideo)));
+  }
 
   function outsideViewport(video: HTMLVideoElement): boolean {
     const rect = video.getBoundingClientRect();
@@ -22,8 +30,20 @@
       && (rect.top < 0 || rect.left < 0 || rect.bottom > innerHeight || rect.right > innerWidth);
   }
 
-  function allowManualPause(): void {
+  function allowManualPause(video = currentVideo): void {
     manualPauseUntil = performance.now() + 350;
+    manualPlayTarget = video;
+  }
+
+  function playerVideo(target: EventTarget | null): HTMLVideoElement | undefined {
+    if (!(target instanceof Element)) return;
+    if (target instanceof HTMLVideoElement) return target;
+    return target.closest('[data-testid="videoPlayer"], [data-testid="videoComponent"]')
+      ?.querySelector("video") ?? undefined;
+  }
+
+  function userChose(video: HTMLVideoElement): boolean {
+    return video === manualPlayTarget && performance.now() < manualPauseUntil;
   }
 
   function isPlayerControl(target: EventTarget | null): boolean {
@@ -34,7 +54,7 @@
   // Capture user intent before X's handlers call pause(). Never resume a video.
   for (const eventName of ["pointerdown", "click"]) {
     document.addEventListener(eventName, (event) => {
-      if (event.isTrusted && isPlayerControl(event.target)) allowManualPause();
+      if (event.isTrusted && isPlayerControl(event.target)) allowManualPause(playerVideo(event.target));
     }, true);
   }
   document.addEventListener("keydown", (event) => {
@@ -43,7 +63,7 @@
     if (target instanceof Element && target.closest('input, textarea, [contenteditable]:not([contenteditable="false"])')) return;
     if (["MediaPause", "MediaPlayPause", "MediaStop"].includes(event.key)
       || (isPlayerControl(target) && [" ", "Enter"].includes(event.key))
-      || event.key.toLowerCase() === "k") allowManualPause();
+      || event.key.toLowerCase() === "k") allowManualPause(playerVideo(target));
   }, true);
 
   // Media-key/browser media controls can use X's Media Session callbacks.
@@ -60,16 +80,30 @@
     };
   }
 
-  // Let a new visible video take over instead of accumulating offscreen players.
+  // Scrolling past another autoplaying video must not replace the chosen playback.
+  HTMLMediaElement.prototype.play = function () {
+    if (this instanceof HTMLVideoElement && this !== currentVideo
+      && hasProtectedVideo() && !userChose(this)) {
+      return Promise.reject(new DOMException("Another video is playing while you scroll.", "AbortError"));
+    }
+    return nativePlay.call(this);
+  };
+
+  // Native autoplay can bypass play(); stop that video, rather than the chosen one.
   document.addEventListener("play", (event) => {
     const video = event.target;
     if (!(video instanceof HTMLVideoElement) || outsideViewport(video)) return;
+    if (video !== currentVideo && hasProtectedVideo() && !userChose(video)) {
+      nativePause.call(video);
+      return;
+    }
     if (currentVideo && currentVideo !== video && leavingViewport(currentVideo)) {
       nativePause.call(currentVideo);
     }
     currentVideo = video;
     keepCurrentPlaying = false;
     manualPauseUntil = 0;
+    manualPlayTarget = undefined;
   }, true);
 
   for (const eventName of ["ended", "emptied"]) {

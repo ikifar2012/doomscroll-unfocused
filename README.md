@@ -58,7 +58,8 @@ The same option is available on legacy `twitter.com` domains.
 It guards against automatic pause calls when the current video leaves the
 viewport and keeps that playback protected when it comes back into view.
 Manual player controls, keyboard pause, and Media Session pause controls
-remain available. Starting another visible video can replace the previous one.
+remain available. Other feed videos cannot take over through autoplay; explicitly
+starting another video replaces the previous one.
 If X removes a player from the timeline, the extension cannot keep it alive.
 
 ## How it works
