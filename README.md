@@ -1,97 +1,66 @@
 # Doomscroll Unfocused
 
-A small Manifest V3 Chrome extension that aims to prevent Instagram and CNN
-videos from pausing when you switch tabs or focus another window.
-Written in TypeScript; Chrome loads the compiled JavaScript.
+Keep Instagram and CNN playing when you switch tabs or windows.
 
-## Open in VS Code (WSL)
+Doomscroll Unfocused is a Chrome extension that blocks the visibility and focus
+signals sites use to pause playback when you switch away. Start a video, then
+get on with whatever else you were doing.
 
-```bash
-cd /home/mstep/vscode-git-wsl/doomscroll-unfocused
-code .
-```
+## Install
 
-Build with Bun 1.4+:
+Requires Chrome 119 or newer. To build from source, install [Bun](https://bun.sh)
+1.4 or newer, then run:
 
-```bash
+```sh
+git clone https://github.com/ikifar2012/doomscroll-unfocused.git
+cd doomscroll-unfocused
 bun install --frozen-lockfile
 bun run build
 ```
 
-The extension itself has no runtime dependencies. Edit `src/keep-playing.ts`,
-then rebuild before reloading the extension in Chrome. Requires Chrome 119+.
+1. Open `chrome://extensions` and enable **Developer mode**.
+2. Click **Load unpacked** and select the `extension` folder.
+3. Refresh Instagram or CNN and start playback.
 
-## Load in Windows Chrome
+Published [GitHub releases](https://github.com/ikifar2012/doomscroll-unfocused/releases)
+include a prebuilt `doomscroll-unfocused.zip`. Extract it and load the extracted
+folder using the same steps; no build tools are needed.
 
-1. In the WSL terminal, run `explorer.exe "$(wslpath -w "$PWD/extension")"`.
-2. Copy the folder path from Explorer's address bar.
-3. Open `chrome://extensions` in Chrome and enable **Developer mode**.
-4. Click **Load unpacked** and select that `extension` folder.
-5. Refresh any already-open Instagram or CNN tabs, start a video, then switch
-   tabs or focus a different window.
-
-If Chrome cannot load from the WSL network path, copy the `extension` folder to
-Windows (for example, `C:\Users\YOUR_NAME\Extensions\doomscroll-unfocused`)
-and load that copy. Copy updated files again after editing in WSL.
-
-To disable: turn the extension off in `chrome://extensions` and refresh the site.
-After code changes, run `bun run build`, click **Reload** on the extension card,
-and refresh the site. If you loaded the previous project folder, remove that
-extension card and load this project's `extension` folder again.
+To turn it off, disable the extension and refresh the site.
 
 ## How it works
 
-The content script runs at `document_start` in the page's `MAIN` world. It makes
-visibility and focus checks report a visible, focused document and suppresses
-visibility-change and page-blur events. Blur events from inputs and buttons are
-preserved. The script is restricted to HTTPS Instagram and CNN pages, including
-their subdomains and matching or origin-inheriting frames. Third-party player
-frames on unrelated domains are outside its scope. It has no network
-requests, analytics, background worker, or additional API permissions.
+A content script runs before the site's scripts, makes the document report itself
+as visible and focused, and stops page visibility-change and blur events from
+reaching the site's listeners. Inputs and buttons still receive normal blur events.
 
-Chrome documents these content-script settings here:
-https://developer.chrome.com/docs/extensions/reference/manifest/content-scripts
+It runs only on Instagram and CNN. It does not collect data, make network requests,
+or load remote code. See the [privacy policy](PRIVACY.md).
 
-This is a visibility/focus workaround, not a video auto-player. Manual pause and
-scrolling away from a video remain under the site's control. It cannot prevent
-Chrome from suspending/discarding tabs or override autoplay restrictions. It also
-makes the site's activity detection see the tab as focused. Site/player changes
-may require adjustments to the workaround.
+## Limitations
 
-## Checks and packaging
+This is a focus-loss workaround. It does not start videos automatically, prevent
+Chrome from suspending tabs, or override pauses caused by scrolling away from a
+video. It also makes the site's activity checks see the tab as focused.
 
-```bash
-bun run check
-bun run package
+Compatibility with the live players still needs verification. If a video pauses
+when you switch away, [open an issue](https://github.com/ikifar2012/doomscroll-unfocused/issues)
+with the page URL and steps to reproduce it.
+
+## Development
+
+Edit `src/keep-playing.ts`, rebuild, reload the extension in `chrome://extensions`,
+and refresh the site.
+
+```sh
+bun run build    # Compile the extension
+bun run check    # Check TypeScript types
+bun run package  # Build dist/doomscroll-unfocused.zip
 ```
 
-The ZIP is written to `dist/doomscroll-unfocused.zip`. Extract it before using
-**Load unpacked**. The ZIP contains only the manifest and compiled content script;
-Bun and development dependencies are not needed to run the extension.
+Pushes and pull requests build the extension through GitHub Actions. To publish a
+GitHub release, match the tag to the version in `package.json` and
+`extension/manifest.json` (for example, `v0.2.0`). The release workflow builds and
+attaches the ZIP.
 
-`bun run check` checks TypeScript types.
-
-Before relying on it, manually check an Instagram Reel, feed video, and CNN video:
-start playback, switch tabs, focus another window, pause manually, scroll to
-another video, and type in a comment. Compare with the extension disabled
-(refresh after toggling). If playback still pauses, record the exact page URL and
-whether switching tabs or changing window focus caused it.
-
-## GitHub builds and releases
-
-Pushes to `main` and pull requests run type checking and build a downloadable
-extension ZIP. Dependency updates use the shared `ikifar2012/.github` Renovate
-preset from `.github/renovate.json`. The Renovate GitHub App must have access to
-this repository for updates to run.
-
-To release, update `version` in both `package.json` and `extension/manifest.json`,
-commit and push, then publish a GitHub release with a matching tag (for example,
-`v0.2.0`). The release workflow checks out that tag, verifies both versions,
-builds with Bun, and attaches `doomscroll-unfocused.zip` to the release. It uses
-the built-in `GITHUB_TOKEN`; no personal token is needed. Release asset uploads
-require mutable releases; if you enable GitHub release immutability, switch to
-building and attaching assets to a draft before publishing it.
-
-Chrome Web Store submission is a separate step. See the
-[publishing checklist](docs/chrome-web-store.md) for requirements and draft
-listing text, and the [privacy policy](PRIVACY.md) for data handling details.
+For Chrome Web Store requirements, see the [publishing guide](docs/chrome-web-store.md).
