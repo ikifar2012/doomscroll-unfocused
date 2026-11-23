@@ -62,6 +62,11 @@ remain available. Other feed videos cannot take over through autoplay; explicitl
 starting another video replaces the previous one.
 If X removes a player from the timeline, the extension cannot keep it alive.
 
+If playback still stops, open the popup's **Playback details** after the pause and
+include the displayed report in your issue. It distinguishes player removal,
+source resets, media errors, and pause calls without including post URLs or account
+details. The report stays in page memory and is cleared when the tab is refreshed.
+
 ## How it works
 
 A content script runs before the site's scripts, makes the document report itself

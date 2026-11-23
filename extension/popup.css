@@ -59,6 +59,8 @@ h2, p { margin: 0; }
 .hint { color: var(--muted); margin-top: 8px; font-size: 11px; line-height: 1.5; }
 .scroll-option { border-top: 1px solid var(--line); padding-top: 14px; margin-top: 16px; }
 .option-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 12px; font-weight: 600; }
+#playback-output { width: 100%; margin-top: 8px; padding: 8px; resize: vertical; border: 1px solid var(--line); border-radius: 4px; background: var(--background); color: var(--text); font: 11px/1.5 monospace; }
+#playback-report { margin-top: 10px; }
 .primary { width: 100%; border: 0; border-radius: 7px; background: var(--control); color: #fff; padding: 11px 14px; margin-top: 18px; font-weight: 600; }
 .primary:hover { background: var(--control-hover); }
 

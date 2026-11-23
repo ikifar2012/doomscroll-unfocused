@@ -10,6 +10,39 @@
   let keepCurrentPlaying = false;
   let manualPauseUntil = 0;
   let manualPlayTarget: HTMLVideoElement | undefined;
+  const events: { event: string; connected: boolean; paused: boolean; readyState: number }[] = [];
+  const observed = new WeakSet<HTMLVideoElement>();
+  let wasConnected = false;
+
+  function record(event: string): void {
+    if (!currentVideo) return;
+    events.push({ event, connected: currentVideo.isConnected, paused: currentVideo.paused, readyState: currentVideo.readyState });
+    if (events.length > 20) events.shift();
+  }
+
+  // Read on demand by the popup. No URLs, page content, or persistent logs.
+  Object.defineProperty(window, "__doomscrollPlaybackReport", {
+    configurable: true,
+    value: () => ({
+      player: currentVideo ? {
+        connected: currentVideo.isConnected,
+        paused: currentVideo.paused,
+        ended: currentVideo.ended,
+        readyState: currentVideo.readyState,
+        networkState: currentVideo.networkState,
+        errorCode: currentVideo.error?.code ?? null,
+        protected: keepCurrentPlaying,
+      } : null,
+      events: events.slice(),
+    }),
+  });
+
+  new MutationObserver(() => {
+    if (!currentVideo) return;
+    if (wasConnected && !currentVideo.isConnected) record("player-removed");
+    else if (!wasConnected && currentVideo.isConnected) record("player-reattached");
+    wasConnected = currentVideo.isConnected;
+  }).observe(document, { childList: true, subtree: true });
 
   function hasProtectedVideo(): boolean {
     return Boolean(currentVideo && currentVideo.isConnected && !currentVideo.paused
@@ -101,6 +134,16 @@
       nativePause.call(currentVideo);
     }
     currentVideo = video;
+    wasConnected = video.isConnected;
+    record("playback-selected");
+    if (!observed.has(video)) {
+      observed.add(video);
+      for (const eventName of ["pause", "emptied", "abort", "ended", "error", "waiting", "stalled"]) {
+        video.addEventListener(eventName, () => {
+          if (video === currentVideo) record(eventName);
+        });
+      }
+    }
     keepCurrentPlaying = false;
     manualPauseUntil = 0;
     manualPlayTarget = undefined;
@@ -119,8 +162,10 @@
       && (keepCurrentPlaying || leavingViewport(this))) {
       // Keep the same playback protected when X reconciles its player on re-entry.
       keepCurrentPlaying = true;
+      record("pause-blocked");
       return;
     }
+    if (this === currentVideo) record("pause-allowed");
     if (this === currentVideo) keepCurrentPlaying = false;
     return nativePause.call(this);
   };
