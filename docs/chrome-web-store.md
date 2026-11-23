@@ -10,10 +10,6 @@ the extension to the Chrome Web Store.
   one-time registration fee, and finish the dashboard's account verification
   requirements. Google requires 2-Step Verification before publishing or updating.
   The registration screen confirms the applicable fee.
-- Create a 128x128 PNG icon, include it in `extension/`, and declare it in the
-  manifest's `icons` field. Google's square-icon guidance is 96x96 artwork with
-  transparent padding inside the 128x128 image. Smaller 16/32/48 PNG variants
-  are useful for Chrome's UI.
 - Capture at least one screenshot demonstrating actual use, at 1280x800 or
   640x400. Up to five screenshots are supported. Promotional tiles (440x280 and
   1400x560) are optional.
@@ -27,8 +23,10 @@ the extension to the Chrome Web Store.
   another focused window, manual pause, scrolling away, and form controls. No
   successful live-player verification has been recorded yet.
 
-The current package is missing the icon; the repository does not yet contain
-store screenshots. Do not treat a successful build as a completed store submission.
+The package includes a 128x128 PNG store icon and 16/32/48 variants, declared in
+the manifest. They use Lucide's Circle Fading Play artwork with its license
+included in the ZIP. Store screenshots are still needed. Do not treat a successful
+build as a completed store submission.
 
 ## Suggested listing text
 

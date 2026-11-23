@@ -64,3 +64,6 @@ GitHub release, match the tag to the version in `package.json` and
 attaches the ZIP.
 
 For Chrome Web Store requirements, see the [publishing guide](docs/chrome-web-store.md).
+
+Icon: [Circle Fading Play](https://lucide.dev/icons/circle-fading-play) by
+Lucide contributors, used under the [included license](extension/THIRD_PARTY_NOTICES.txt).
