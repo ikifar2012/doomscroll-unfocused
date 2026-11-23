@@ -58,14 +58,8 @@ The same option is available on legacy `twitter.com` domains.
 It guards against automatic pause calls when the current video leaves the
 viewport and keeps that playback protected when it comes back into view.
 Manual player controls, keyboard pause, and Media Session pause controls
-remain available. Other feed videos cannot take over through autoplay; explicitly
-starting another video replaces the previous one.
+remain available. Autoplay and switching between videos stay under X’s control.
 If X removes a player from the timeline, the extension cannot keep it alive.
-
-If playback still stops, open the popup's **Playback details** after the pause and
-include the displayed report in your issue. It distinguishes player removal,
-source resets, media errors, and pause calls without including post URLs or account
-details. The report stays in page memory and is cleared when the tab is refreshed.
 
 ## How it works
 

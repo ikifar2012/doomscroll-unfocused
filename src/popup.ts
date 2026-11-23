@@ -10,7 +10,6 @@ const status = element("current-status");
 const control = element("current-control");
 const toggle = element<HTMLInputElement>("current-toggle");
 const scrollToggle = element<HTMLInputElement>("scroll-toggle");
-const playbackDetails = element<HTMLButtonElement>("playback-details");
 const add = element<HTMLButtonElement>("add-current");
 const list = element<HTMLUListElement>("sites");
 const notice = element("notice");
@@ -90,8 +89,6 @@ function render(): void {
   element("access-note").hidden = add.hidden;
   element("scroll-option").hidden = !current || !currentUrl || !isXHost(currentUrl.hostname);
   scrollToggle.checked = current?.blockScrollPause === true;
-  playbackDetails.hidden = !(current?.blockScrollPause && current.enabled && current.granted);
-  element("playback-report").hidden = true;
   element("scroll-description").textContent = current && !current.enabled
     ? "Enable this site above to apply this option. Off by default."
     : "X only. Keep the current video playing when it leaves the screen. Off by default.";
@@ -173,34 +170,6 @@ add.onclick = () => {
     await request({ type: "add-site", url: url.origin });
     return true;
   }, true);
-};
-
-playbackDetails.onclick = async () => {
-  if (tabId === undefined || busy) return;
-  setBusy(true);
-  try {
-    const [result] = await chrome.scripting.executeScript({
-      target: { tabId },
-      world: "MAIN",
-      func: () => {
-        const read = (window as Window & { __doomscrollPlaybackReport?: () => unknown }).__doomscrollPlaybackReport;
-        return typeof read === "function" ? read() : null;
-      },
-    });
-    if (!result?.result) {
-      showNotice("Refresh X, reproduce the pause, then open Playback details again.", false, true);
-      return;
-    }
-    const output = element<HTMLTextAreaElement>("playback-output");
-    output.value = JSON.stringify({ extensionVersion: chrome.runtime.getManifest().version, ...result.result }, null, 2);
-    element("playback-report").hidden = false;
-    output.focus();
-    output.select();
-  } catch {
-    showNotice("Could not read playback details. Open the X tab and try again.", true);
-  } finally {
-    setBusy(false);
-  }
 };
 
 refresh.onclick = async () => {

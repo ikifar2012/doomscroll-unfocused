@@ -29,12 +29,6 @@ video's viewport position and briefly recognizes player clicks, pause keys, and
 Media Session pause actions so that manual pausing remains possible. It does not
 record or transmit those interactions, video content, or positions.
 
-For troubleshooting, the X script keeps up to 20 playback-status events in the
-current page's memory, such as pause, source reset, and player removal. Playback
-details show these events and the current player's connection, buffering, and
-error state only when requested. They contain no URLs, post text, account details,
-or interaction history, are not sent anywhere, and are discarded on page reload.
-
 Site access is requested when you add a domain. Disabling a site stops future
 script injection but keeps its preference and permission so it can be re-enabled.
 Removing a custom site also releases its optional permission. The default
