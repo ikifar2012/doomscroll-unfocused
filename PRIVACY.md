@@ -6,7 +6,8 @@ It changes the visibility and focus signals delivered to those pages to help
 prevent playback from pausing when you switch tabs or windows.
 
 The extension saves your chosen site domains and their enabled/disabled settings
-in Chrome's local extension storage. These preferences stay on your device and
+and the optional X scroll-pause preference in Chrome's local extension storage.
+The X option is off unless you explicitly select it. These preferences stay on your device and
 are not synced or sent to the developer or other parties. Removing a site deletes
 its saved preference. Uninstalling the extension removes its local settings.
 
@@ -22,6 +23,11 @@ The extension inspects event targets only to distinguish a page losing focus fro
 an input or button losing focus. Those event targets are not recorded or sent
 anywhere. Sites continue to operate under their own privacy policies; this
 extension makes their visibility and focus checks see the page as active.
+
+When the X scroll-pause option is enabled, the extension also checks the active
+video's viewport position and briefly recognizes player clicks, pause keys, and
+Media Session pause actions so that manual pausing remains possible. It does not
+record or transmit those interactions, video content, or positions.
 
 Site access is requested when you add a domain. Disabling a site stops future
 script injection but keeps its preference and permission so it can be re-enabled.

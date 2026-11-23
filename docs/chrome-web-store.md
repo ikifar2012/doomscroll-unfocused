@@ -40,6 +40,8 @@ Keep listening while you move to another tab or window. Doomscroll Unfocused
 adjusts page visibility and focus signals to help prevent players from pausing
 when you switch away. Instagram and CNN are enabled by default. Use the toolbar
 popup to enable, disable, add, and remove sites.
+On X, users can separately opt into keeping videos playing as they scroll out of
+view. This option is off by default and requires adding the site first.
 
 Start playback yourself. The extension does not force videos to play, bypass
 autoplay rules, or stop Chrome from suspending tabs. Refresh open tabs after
@@ -74,6 +76,11 @@ without recording them. Disclose this local handling accurately in the dashboard
 local-only processing is still subject to Google's disclosure requirements.
 Review the included privacy policy and dashboard certifications against the
 actual submitted version.
+
+The optional X feature also inspects video viewport bounds and recognizes player
+clicks, pause keys, and Media Session pause actions locally, without recording or
+transmitting them. Include this behavior in the reviewer's instructions and
+verify it on the live X player before submitting.
 
 **Support:** https://github.com/ikifar2012/doomscroll-unfocused/issues
 

@@ -4,3 +4,4 @@ node_modules/
 extension/keep-playing.js
 extension/background.js
 extension/popup.js
+extension/keep-scrolling.js

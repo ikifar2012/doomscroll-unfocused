@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Doomscroll Unfocused",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Keep videos playing when you switch tabs. Enable it per site, with Instagram and CNN included.",
   "minimum_chrome_version": "119",
   "icons": {

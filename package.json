@@ -1,10 +1,10 @@
 {
   "name": "doomscroll-unfocused",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "description": "A Chrome extension to keep videos playing when you switch tabs, with per-site controls.",
   "scripts": {
-    "build": "bun run icons && bun build ./src/keep-playing.ts ./src/background.ts ./src/popup.ts --target browser --format iife --outdir extension",
+    "build": "bun run icons && bun build ./src/keep-playing.ts ./src/keep-scrolling.ts ./src/background.ts ./src/popup.ts --target browser --format iife --outdir extension",
     "check": "tsc --noEmit",
     "package": "bun run build && bash scripts/package.sh",
     "icons": "bun scripts/icons.ts"

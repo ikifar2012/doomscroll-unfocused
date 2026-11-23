@@ -1,4 +1,4 @@
-import { defaultSites, matchesSite, patternFor, websiteUrl } from "./sites.js";
+import { defaultSites, isXSite, matchesSite, patternFor, websiteUrl } from "./sites.js";
 import type { Request, Response, Site, SiteState } from "./sites.js";
 
 const prefix = "doomscroll-";
@@ -30,7 +30,9 @@ async function syncScripts(sites: Site[]): Promise<void> {
     .map((site): chrome.scripting.RegisteredContentScript => ({
       id: `${prefix}${encodeURIComponent(site.pattern)}`,
       matches: [site.pattern],
-      js: ["keep-playing.js"],
+      js: site.blockScrollPause === true && isXSite(site)
+        ? ["keep-playing.js", "keep-scrolling.js"]
+        : ["keep-playing.js"],
       runAt: "document_start",
       world: "MAIN",
       allFrames: true,
@@ -85,6 +87,15 @@ async function handle(request: Request): Promise<SiteState[]> {
         throw new Error("Allow access to this site before enabling it.");
       }
       site.enabled = request.enabled;
+      await saveSites(sites);
+      break;
+    }
+    case "set-scroll-pause": {
+      const site = sites.find((entry) => entry.pattern === request.pattern);
+      if (!site || !isXSite(site) || typeof request.enabled !== "boolean") {
+        throw new Error("Scroll-pause control is only available for saved X sites.");
+      }
+      site.blockScrollPause = request.enabled;
       await saveSites(sites);
       break;
     }

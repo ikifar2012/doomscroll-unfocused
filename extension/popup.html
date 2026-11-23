@@ -25,6 +25,16 @@
         <p id="current-status" class="secondary">Getting this tab’s site settings.</p>
         <button id="add-current" class="primary" hidden>Add current site</button>
         <p id="access-note" class="hint" hidden>Chrome will ask for access to this domain.</p>
+        <div id="scroll-option" class="scroll-option" hidden>
+          <div class="option-heading">
+            <label for="scroll-toggle">Keep playing while scrolling</label>
+            <label class="switch">
+              <input id="scroll-toggle" type="checkbox" role="switch" aria-label="Keep playing while scrolling" aria-describedby="scroll-description">
+              <span class="track" aria-hidden="true"></span>
+            </label>
+          </div>
+          <p id="scroll-description" class="hint">X only. Keep the current video playing when it leaves the screen. Off by default.</p>
+        </div>
       </section>
 
       <section class="saved" aria-labelledby="saved-heading">

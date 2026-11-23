@@ -1,4 +1,4 @@
-import { matchesSite, patternFor, siteLabel, websiteUrl } from "./sites.js";
+import { isXHost, matchesSite, patternFor, siteLabel, websiteUrl } from "./sites.js";
 import type { Request, Response, SiteState } from "./sites.js";
 
 function element<T extends HTMLElement>(id: string): T {
@@ -9,6 +9,7 @@ const host = element("current-host");
 const status = element("current-status");
 const control = element("current-control");
 const toggle = element<HTMLInputElement>("current-toggle");
+const scrollToggle = element<HTMLInputElement>("scroll-toggle");
 const add = element<HTMLButtonElement>("add-current");
 const list = element<HTMLUListElement>("sites");
 const notice = element("notice");
@@ -86,6 +87,18 @@ function render(): void {
   control.hidden = !current;
   add.hidden = !currentUrl || Boolean(current);
   element("access-note").hidden = add.hidden;
+  element("scroll-option").hidden = !current || !currentUrl || !isXHost(currentUrl.hostname);
+  scrollToggle.checked = current?.blockScrollPause === true;
+  element("scroll-description").textContent = current && !current.enabled
+    ? "Enable this site above to apply this option. Off by default."
+    : "X only. Keep the current video playing when it leaves the screen. Off by default.";
+  scrollToggle.onchange = () => {
+    if (!current) return;
+    void change(async () => {
+      await request({ type: "set-scroll-pause", pattern: current.pattern, enabled: scrollToggle.checked });
+      return true;
+    }, true);
+  };
 
   if (current) {
     toggle.checked = current.enabled && current.granted;

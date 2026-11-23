@@ -48,6 +48,18 @@ removing a custom site also releases its optional access permission.
 Chrome's internal pages and the Chrome Web Store cannot be added. Site settings
 are saved locally on your device.
 
+### X: keep playing while scrolling
+
+Add `x.com` from its tab, then choose **Keep playing while scrolling** in the
+popup and refresh the tab. This separate option is **off by default**, including
+when you first add X. X itself is not enabled or granted access by default.
+The same option is available on legacy `twitter.com` domains.
+
+It guards against automatic pause calls when the current video leaves the
+viewport. Manual player controls, keyboard pause, and Media Session pause controls
+remain available. Starting another visible video can replace the previous one.
+If X removes a player from the timeline, the extension cannot keep it alive.
+
 ## How it works
 
 A content script runs before the site's scripts, makes the document report itself
@@ -62,8 +74,8 @@ does not send data anywhere or load remote code. See the [privacy policy](PRIVAC
 ## Limitations
 
 This is a focus-loss workaround. It does not start videos automatically, prevent
-Chrome from suspending tabs, or override pauses caused by scrolling away from a
-video. It also makes the site's activity checks see the tab as focused.
+Chrome from suspending tabs, or generally override scroll-related pauses outside
+the optional X feature. It also makes the site's activity checks see the tab as focused.
 
 Compatibility with the live players still needs verification. If a video pauses
 when you switch away, [open an issue](https://github.com/ikifar2012/doomscroll-unfocused/issues)
@@ -84,7 +96,7 @@ bun run package  # Build dist/doomscroll-unfocused.zip
 
 Pushes and pull requests build the extension through GitHub Actions. To publish a
 GitHub release, match the tag to the version in `package.json` and
-`extension/manifest.json` (for example, `v0.3.0`). The release workflow builds and
+`extension/manifest.json` (for example, `v0.4.0`). The release workflow builds and
 attaches the ZIP.
 
 For Chrome Web Store requirements, see the [publishing guide](docs/chrome-web-store.md).

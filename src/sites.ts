@@ -1,6 +1,7 @@
 export interface Site {
   pattern: string;
   enabled: boolean;
+  blockScrollPause?: boolean;
 }
 
 export interface SiteState extends Site {
@@ -11,6 +12,7 @@ export type Request =
   | { type: "get-sites" }
   | { type: "add-site"; url: string }
   | { type: "set-enabled"; pattern: string; enabled: boolean }
+  | { type: "set-scroll-pause"; pattern: string; enabled: boolean }
   | { type: "remove-site"; pattern: string };
 
 export type Response =
@@ -42,6 +44,15 @@ export function patternFor(url: URL): string {
 
 export function siteLabel(pattern: string): string {
   return pattern.replace(/^https?:\/\//, "").replace(/\/\*$/, "").replace(/^\*\./, "");
+}
+
+export function isXHost(hostname: string): boolean {
+  return ["x.com", "twitter.com"].some((root) => hostname === root || hostname.endsWith(`.${root}`));
+}
+
+export function isXSite(site: Site): boolean {
+  const url = websiteUrl(site.pattern.replace("*.", ""));
+  return Boolean(url && isXHost(url.hostname));
 }
 
 export function matchesSite(site: Site, url: URL): boolean {
