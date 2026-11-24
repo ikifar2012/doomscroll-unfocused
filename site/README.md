@@ -1,6 +1,7 @@
 # Project website
 
 Static landing and privacy pages for `https://doomscroll.mstep.dev`.
+Cloudflare's fallback origin is `https://doomscroll-unfocused.pages.dev`.
 
 ```sh
 bun run site:build
