@@ -85,7 +85,9 @@ verify it on the live X player before submitting.
 
 **Support:** https://github.com/ikifar2012/doomscroll-unfocused/issues
 
-**Privacy policy:** https://github.com/ikifar2012/doomscroll-unfocused/blob/main/PRIVACY.md
+**Homepage:** https://doomscroll.mstep.dev
+
+**Privacy policy:** https://doomscroll.mstep.dev/privacy
 
 ## Upload and submit
 

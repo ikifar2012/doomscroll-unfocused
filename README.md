@@ -9,6 +9,8 @@ get on with whatever else you were doing.
 Instagram and CNN are enabled by default. Use the toolbar popup to toggle each
 site, add the website you're viewing, or remove saved domains.
 
+[Website](https://doomscroll.mstep.dev) · [Privacy policy](https://doomscroll.mstep.dev/privacy)
+
 ## Install
 
 Requires Chrome 119 or newer. To build from source, install [Bun](https://bun.sh)
@@ -93,6 +95,7 @@ refresh the site.
 bun run build    # Compile the extension
 bun run check    # Check TypeScript types
 bun run package  # Build dist/doomscroll-unfocused.zip
+bun run site:build # Build the project website in site/dist
 ```
 
 Pushes and pull requests build the extension through GitHub Actions. To publish a
@@ -101,6 +104,9 @@ GitHub release, match the tag to the version in `package.json` and
 attaches the ZIP.
 
 For Chrome Web Store requirements, see the [publishing guide](docs/chrome-web-store.md).
+
+The website source is in `site/`. Cloudflare Pages deploys it directly from
+GitHub pushes to `main`; no deployment Action or GitHub secrets are needed.
 
 Icon: [Circle Fading Play](https://lucide.dev/icons/circle-fading-play) by
 Lucide contributors, used under the [included license](extension/THIRD_PARTY_NOTICES.txt).

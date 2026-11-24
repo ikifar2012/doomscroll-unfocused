@@ -1,6 +1,6 @@
 # Project website
 
-Static landing and privacy pages for `https://doomscroll.mstep.dev`.
+Static landing and privacy pages for [doomscroll.mstep.dev](https://doomscroll.mstep.dev).
 Cloudflare's fallback origin is `https://doomscroll-unfocused.pages.dev`.
 
 ```sh
