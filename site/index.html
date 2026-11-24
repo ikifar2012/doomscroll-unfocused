@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <title>Doomscroll Unfocused — Keep playing. Switch away.</title>
+    <meta name="description" content="A small Chrome extension that helps videos keep playing when you switch tabs or windows. Choose your sites and keep your settings local.">
+    <link rel="canonical" href="https://doomscroll.mstep.dev/">
+    <link rel="icon" type="image/png" href="/assets/icon.png">
+    <link rel="stylesheet" href="/styles.css">
+    <meta property="og:title" content="Doomscroll Unfocused">
+    <meta property="og:description" content="Keep playing. Switch away. Per-site playback controls for Chrome.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://doomscroll.mstep.dev/">
+    <meta property="og:image" content="https://doomscroll.mstep.dev/assets/screenshot-light.png">
+    <meta name="twitter:card" content="summary_large_image">
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="site-header wrap">
+      <a class="brand" href="/" aria-label="Doomscroll Unfocused home"><img src="/assets/icon.png" alt="" width="36" height="36"><span>Doomscroll <span class="brand-secondary">Unfocused</span></span></a>
+      <nav aria-label="Main navigation"><a href="#install">Install</a><a href="/privacy">Privacy</a><a href="https://github.com/ikifar2012/doomscroll-unfocused">GitHub</a></nav>
+    </header>
+
+    <main id="main">
+      <section class="hero wrap" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <h1 id="hero-title">Keep playing.<br>Switch away.</h1>
+          <p class="lead">A small Chrome extension that helps videos keep playing when you switch tabs or windows.</p>
+          <p class="description">Instagram and CNN are included. Add other sites when you need them, and control each one from the toolbar.</p>
+          <div class="actions"><a class="button" href="https://github.com/ikifar2012/doomscroll-unfocused/releases/latest/download/doomscroll-unfocused.zip">Download for Chrome</a><a class="install-link" href="#install">How to install</a></div>
+          <p class="download-note">Free download. Chrome 119+. Install as an unpacked extension.</p>
+        </div>
+        <figure class="preview">
+          <div class="popup-crop">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="/assets/screenshot-dark.png">
+              <img src="/assets/screenshot-light.png" width="1280" height="800" alt="The extension popup with per-site controls, saved sites, and an option to add the current site.">
+            </picture>
+          </div>
+          <figcaption>A small popup. Just the controls you need.</figcaption>
+        </figure>
+      </section>
+
+      <section id="install" class="guide wrap" aria-labelledby="install-title">
+        <div class="installation">
+          <h2 id="install-title">Install it in Chrome.</h2>
+          <p>Download the ZIP above, then:</p>
+          <ol class="steps">
+            <li>Extract the ZIP into a folder you’ll keep.</li>
+            <li>Open <code>chrome://extensions</code> in Chrome and enable <strong>Developer mode</strong>.</li>
+            <li>Choose <strong>Load unpacked</strong> and select the folder containing <code>manifest.json</code>.</li>
+            <li>Refresh your video tab, start playback, and switch away.</li>
+          </ol>
+          <p class="muted">For updates, replace the files, reload the extension, and refresh your tabs.</p>
+        </div>
+        <div class="about">
+          <h2>Your sites. Your choice.</h2>
+          <p>Turn sites on or off from the popup. Adding a new domain asks Chrome for access to that domain. Refresh open tabs after changing settings.</p>
+          <h3>Local by design.</h3>
+          <p>Your site preferences stay on your device. The extension has no analytics, accounts, or external services. <a href="/privacy">Read the privacy policy.</a></p>
+          <details>
+            <summary>What about scrolling on X?</summary>
+            <p>Add X and opt into <strong>Keep playing while scrolling</strong>. It’s off by default. It blocks scroll-triggered pauses while the player exists, but cannot keep playback alive after X removes the video or clears its source.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="limitations wrap" aria-labelledby="limits-title">
+        <h2 id="limits-title">A little less interruption.</h2>
+        <p>This extension adjusts the focus and visibility signals sites receive. It doesn’t force autoplay, prevent Chrome from suspending tabs, or guarantee compatibility with every player. <a href="https://github.com/ikifar2012/doomscroll-unfocused/issues">Report a problem</a> if a site behaves differently.</p>
+      </section>
+    </main>
+
+    <footer class="site-footer wrap"><p>Made by <a href="https://mstep.dev">mstep</a>.</p><div><a href="/privacy">Privacy</a><a href="https://github.com/ikifar2012/doomscroll-unfocused/issues">Support</a><a href="https://github.com/ikifar2012/doomscroll-unfocused/releases">Releases</a><a href="/third-party-notices.txt">Credits</a></div></footer>
+  </body>
+</html>

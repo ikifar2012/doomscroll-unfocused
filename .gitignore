@@ -1,5 +1,6 @@
 dist/
 node_modules/
+.wrangler/
 *.log
 extension/keep-playing.js
 extension/background.js
