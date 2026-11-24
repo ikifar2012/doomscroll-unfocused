@@ -10,9 +10,10 @@ the extension to the Chrome Web Store.
   one-time registration fee, and finish the dashboard's account verification
   requirements. Google requires 2-Step Verification before publishing or updating.
   The registration screen confirms the applicable fee.
-- Capture at least one screenshot demonstrating actual use, at 1280x800 or
-  640x400. Up to five screenshots are supported. Promotional tiles (440x280 and
-  1400x560) are optional.
+- Upload the supplied [light](../assets/store/screenshot-light.png) and
+  [dark](../assets/store/screenshot-dark.png) screenshots. Both are 1280x800,
+  24-bit RGB PNGs with no transparency. Up to five screenshots are supported.
+  Promotional tiles (440x280 and 1400x560) are optional.
 - Finish the listing: name, detailed description, category, language, support
   information, and distribution choices.
 - Complete the Privacy practices tab with the single purpose, justification for
@@ -25,8 +26,8 @@ the extension to the Chrome Web Store.
 
 The package includes a 128x128 PNG store icon and 16/32/48 variants, declared in
 the manifest. They use Lucide's Circle Fading Play artwork with its license
-included in the ZIP. Store screenshots are still needed. Do not treat a successful
-build as a completed store submission.
+included in the ZIP. Store screenshots are available in `assets/store/`.
+Account setup, listing fields, and live verification still need completion.
 
 ## Suggested listing text
 
